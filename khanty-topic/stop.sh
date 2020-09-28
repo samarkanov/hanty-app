@@ -1,5 +1,5 @@
 #!/bin/bash
-app="hanty.topic"
+app="khanty.topic"
 
 docker stop ${app}
 docker rm --force ${app}

@@ -27,7 +27,7 @@ func get_config(service_name string) (HantyServiceNode) {
     var config HantyConfig
     var res HantyServiceNode
 
-    config_file, err := os.Open(os.Getenv("HANTY_CONFIG_FILE"))
+    config_file, err := os.Open(os.Getenv("KHANTY_CONFIG_FILE"))
     defer config_file.Close()
     if err != nil {
         panic(err)
