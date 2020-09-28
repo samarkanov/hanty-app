@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "strings"
     "os"
     "log"
     "encoding/json"
@@ -45,6 +46,9 @@ func get_config(service_name string) (HantyServiceNode) {
 }
 
 func get_context() (HantyTopicContext) {
+    // let's make the service retain the context information
+    // we will rework it later on
+
     var ctx HantyTopicContext = make(HantyTopicContext)
 
     ctx["ChangeColor"] = []string{"#5e72e4", "#f3a4b5", "#ffd600",
@@ -55,32 +59,42 @@ func get_context() (HantyTopicContext) {
     return ctx
 }
 
-func handle_get(w http.ResponseWriter, r * http.Request) {
+func handle_request(w http.ResponseWriter, r * http.Request) {
+    // allow CORS: so the request can be done from anywhere
+    // It is ok for test environment
     w.Header().Set("Access-Control-Allow-Origin", "*")
-    topic_, _ := r.URL.Query()["topic"]
+
+    var res string
     var ctx HantyTopicContext
-    var reply = make(map[string] []string)
     ctx = get_context()
 
-    if len(topic_) == 0 {
+    if r.URL.Path == "/" {
         // return all supported topics
         supported_topics := make([]string, 0, len(ctx))
         for k := range ctx {
            supported_topics = append(supported_topics, k)
         }
-        reply["supported_topics"] = supported_topics
+        var reply = make(map[string] []string)
+        reply["topics"] = supported_topics
+        res_, _ := json.Marshal(reply)
+        res = string(res_)
     } else {
         // return list of states for a given topic
-        topic := topic_[0]
-        reply[topic] = ctx[topic]
+        topic := strings.Split(r.URL.Path, "/")[1]
+        topic = strings.Split(topic, "/")[0]
+        var reply = make(map[string]interface{})
+        reply["topic"] = topic
+        reply["states"] = ctx[topic]
+        res_, _ := json.Marshal(reply)
+        res = string(res_)
     }
 
-    res, _ := json.Marshal(reply)
-    fmt.Fprintf(w, string(res))
+    fmt.Fprintf(w, res)
 }
 
 func main() {
+    // reading config file from the file system
     config := get_config(os.Getenv("THIS_SERVICE_NAME"))
-    http.HandleFunc("/get", handle_get)
+    http.HandleFunc("/", handle_request)
     log.Fatal(http.ListenAndServe(":"+config.Port, nil))
 }
