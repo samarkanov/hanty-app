@@ -1,3 +1,4 @@
+# Running
 1. Edit config: change the **host** and the **port**
 2. $ ./start.sh
 3. Check it out by sending the GET requests towards the server
