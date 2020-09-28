@@ -4,7 +4,7 @@
 4. $ ./stop.sh
 
 # Blog entry
-[https://samarkanov.info/blog/rest/khanty-app-part-1.html](https://samarkanov.info/blog/rest/hanty-app-part-1.html)
+[https://samarkanov.info/blog/rest/khanty-app-part-1.html](https://samarkanov.info/blog/rest/khanty-app-part-1.html)
 
 # Swagger API docs
 [https://app.swaggerhub.com/apis-docs/samarkanov/khanty-topic/0.0.3](https://app.swaggerhub.com/apis-docs/samarkanov/khanty-topic/0.0.3)
