@@ -1,6 +1,6 @@
 1. Edit config: change the **host** and the **port**
 2. $ ./start.sh
-3. Check by send HTTP request towards the server
+3. Check by sending HTTP request towards the server
 4. $ ./stop.sh
 
 # Blog entry
