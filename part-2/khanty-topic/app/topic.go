@@ -60,5 +60,5 @@ func handle_request(w http.ResponseWriter, r * http.Request) {
 
 func main() {
     http.HandleFunc("/", handle_request)
-    log.Fatal(http.ListenAndServe(":"+utils.Port("topic"), nil))
+    log.Fatal(http.ListenAndServe(":"+utils.Portno("topic"), nil))
 }

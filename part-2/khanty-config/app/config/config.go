@@ -70,7 +70,6 @@ func init_config() * Config {
     return &res
 }
 
-
 /* Config Constructor */
 func New() * Config {
     return get_config()
