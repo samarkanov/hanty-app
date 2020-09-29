@@ -6,5 +6,5 @@ import (
 )
 
 func SayHi() string {
-    return "hello"
+    return "hello here we g"
 }
