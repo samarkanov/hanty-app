@@ -49,7 +49,7 @@ func init_config() * Config {
     var config HantyConfig
 
     config_file, err := os.Open(os.Getenv("KHANTY_CONFIG_FILE"))
-    //config_file, err := os.Open("../config.json")
+    // config_file, err := os.Open("../config.json")
 
     defer config_file.Close()
     if err != nil {

@@ -48,15 +48,15 @@ func handle_request(w http.ResponseWriter, r * http.Request){
 }
 
 func main() {
-    config := config.New() // reading the config file
+    //config := config.New() // reading the config file
     // and saving it to memory
 
-    portno, _, err := config.GetData("db")
+    //portno, _, err := config.GetData("db")
 
-    if err != nil {
-        panic(err)
-    }
+    //if err != nil {
+    //    panic(err)
+    //}
 
     http.HandleFunc("/config", handle_request)
-    log.Fatal(http.ListenAndServe(":" + portno, nil))
+    log.Fatal(http.ListenAndServe(":" + utils.Portno("db"), nil))
 }
