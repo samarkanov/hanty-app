@@ -1,3 +1,3 @@
-module github.com/khanty-app/utils
+module github.com/samarkanov/khanty-app/utils
 
 go 1.13
