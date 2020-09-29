@@ -3,3 +3,5 @@ github.com/samarkanov/khanty-app/utils v0.0.0-20200929123634-bd207ac5fdde h1:UT4
 github.com/samarkanov/khanty-app/utils v0.0.0-20200929123634-bd207ac5fdde/go.mod h1:XYfEPiM7iTWVyt90GD2W9rWidZ/aQRsvOjeYTAzAMJM=
 github.com/samarkanov/khanty-app/utils v0.0.0-20200929183539-c4de44d12246 h1:OZm1oIi9w4Ew0X/XOA4ICjciFm2SLIyBrAMPhleFutg=
 github.com/samarkanov/khanty-app/utils v0.0.0-20200929183539-c4de44d12246/go.mod h1:XYfEPiM7iTWVyt90GD2W9rWidZ/aQRsvOjeYTAzAMJM=
+github.com/samarkanov/khanty-app/utils v0.0.0-20200929185531-7405372b8752 h1:QGmU+ZHnm1KQUM0Vil3/Y1pXqZdy4qK/DLmI5MscIMI=
+github.com/samarkanov/khanty-app/utils v0.0.0-20200929185531-7405372b8752/go.mod h1:XYfEPiM7iTWVyt90GD2W9rWidZ/aQRsvOjeYTAzAMJM=
