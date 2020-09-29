@@ -1,0 +1,10 @@
+{
+"services":
+  [
+    {
+       "name": "topic",
+       "host": "http://develop.valenoq.com",
+       "port": "10001"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+github.com/samarkanov/khanty-app v0.0.0-20200929123634-bd207ac5fdde h1:x/eBUd9O83ZHrZQ6kn15RJqGoogbkMe/VKFRvPgOAJA=
+github.com/samarkanov/khanty-app/utils v0.0.0-20200929123634-bd207ac5fdde h1:UT4flAqkAFD1b4Axl4hFTTUQ2kaq9tGPk2OOSb7j0Lg=
+github.com/samarkanov/khanty-app/utils v0.0.0-20200929123634-bd207ac5fdde/go.mod h1:XYfEPiM7iTWVyt90GD2W9rWidZ/aQRsvOjeYTAzAMJM=
+github.com/samarkanov/khanty-app/utils v0.0.0-20200929183539-c4de44d12246 h1:OZm1oIi9w4Ew0X/XOA4ICjciFm2SLIyBrAMPhleFutg=
+github.com/samarkanov/khanty-app/utils v0.0.0-20200929183539-c4de44d12246/go.mod h1:XYfEPiM7iTWVyt90GD2W9rWidZ/aQRsvOjeYTAzAMJM=
