@@ -5,6 +5,6 @@ import (
     //"fmt"
 )
 
-func say_hi() string {
+func SayHi() string {
     return "hello"
 }
