@@ -8,5 +8,5 @@
 
 
 # Swagger API docs
-Khanty-topic: [https://app.swaggerhub.com/apis-docs/samarkanov/khanty-topic/0.0.3](https://app.swaggerhub.com/apis-docs/samarkanov/khanty-topic/0.0.3)
-Khanty-config: [https://app.swaggerhub.com/apis-docs/samarkanov/Khanty-config/0.0.1](https://app.swaggerhub.com/apis-docs/samarkanov/Khanty-config/0.0.1)
+- Khanty-topic: [https://app.swaggerhub.com/apis-docs/samarkanov/khanty-topic/0.0.3](https://app.swaggerhub.com/apis-docs/samarkanov/khanty-topic/0.0.3)
+- Khanty-config: [https://app.swaggerhub.com/apis-docs/samarkanov/Khanty-config/0.0.1](https://app.swaggerhub.com/apis-docs/samarkanov/Khanty-config/0.0.1)
