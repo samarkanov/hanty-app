@@ -64,7 +64,7 @@ class TestDB(unittest.TestCase):
         self.assertTrue({'Topic': 'topic_x', 'Data': ['value_x']} in res)
         self.assertEqual(len(res), 1)
 
-        # deleting values with DELETE
+        # deleting values via DELETE request
         url = "{host}/client_y/topic_m".format(host=HOST)
         requests.delete(url)
 
@@ -83,6 +83,81 @@ class TestDB(unittest.TestCase):
         res = json.loads(res.text)
         self.assertTrue(res is None)
 
+    def test_delete_entries_gw(self):
+        print("TestDB::test_delete_entries_gw")
+
+        params = dict()
+        params["topic"] = "topic_x"
+        params["value"] = "value_x"
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.post(url, params)
+        self.assertTrue(res.ok)
+        self.assertTrue(json.loads(res.text)["success"])
+
+        params["topic"] = "topic_x"
+        params["value"] = "value_y"
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.post(url, params)
+        self.assertTrue(res.ok)
+        self.assertTrue(json.loads(res.text)["success"])
+
+        params["topic"] = "topic_x"
+        params["value"] = "value_z"
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.post(url, params)
+        self.assertTrue(res.ok)
+        self.assertTrue(json.loads(res.text)["success"])
+
+        params["topic"] = "topic_x"
+        params["value"] = "value_q"
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.post(url, params)
+        self.assertTrue(res.ok)
+        self.assertTrue(json.loads(res.text)["success"])
+
+        # deleting entries via DELETE request
+        url = "{host}/client_x/topic_x/value_z".format(host=HOST)
+        requests.delete(url)
+
+        # check after delete
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.get(url)
+        res = json.loads(res.text)
+        self.assertEqual([{'Topic': 'topic_x', 'Data': ['value_x', 'value_y', 'value_q']}], res)
+
+        # deleting entries via DELETE request
+        url = "{host}/client_x/topic_x/value_q".format(host=HOST)
+        requests.delete(url)
+
+        # check after delete
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.get(url)
+        res = json.loads(res.text)
+        self.assertEqual([{'Topic': 'topic_x', 'Data': ['value_x', 'value_y']}], res)
+
+    def test_insert_duplicated(self):
+        print("TestDB::test_insert_duplicated")
+
+        params = dict()
+        params["topic"] = "topic_x"
+        params["value"] = "value_x"
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.post(url, params)
+        self.assertTrue(res.ok)
+        self.assertTrue(json.loads(res.text)["success"])
+
+        params["topic"] = "topic_x"
+        params["value"] = "value_x"
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.post(url, params)
+        self.assertTrue(res.ok)
+        self.assertTrue(json.loads(res.text)["success"])
+
+        # check after insert of duplicated items
+        url = "{host}/client_x".format(host=HOST)
+        res = requests.get(url)
+        res = json.loads(res.text)
+        self.assertEqual([{'Topic': 'topic_x', 'Data': ['value_x']}], res)
 
 if __name__ == "__main__":
     unittest.main()

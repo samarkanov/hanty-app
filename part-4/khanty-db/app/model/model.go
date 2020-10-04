@@ -2,6 +2,7 @@ package model
 
 import (
     "sync"
+    // "fmt"
     "encoding/json"
 )
 
@@ -57,9 +58,16 @@ func (DB) remove(idx int) {
 
 func (DB) remove_row(idx int, jdx int) {
     dbb := (*db)[idx].Data
-    len_ := len((*db)[idx].Data) - 1
+    len_ := len(dbb) - 1
     dbb[len_], dbb[jdx] = dbb[jdx], dbb[len_]
     (*db)[idx].Data = dbb[:len_]
+}
+
+func (DB) remove_entry(idx int, jdx int, edx int) {
+    dbb := (*db)[idx].Data[jdx].Data
+    len_ := len(dbb) - 1
+    dbb[len_], dbb[edx] = dbb[edx], dbb[len_]
+    (*db)[idx].Data[jdx].Data = dbb[:len_]
 }
 
 
@@ -73,6 +81,12 @@ func (DB) Set(query * Query) {
             table_idx = idx
             for jdx, row := range table.Data {
                 if row.Topic == query.Topic {
+                    // do not insert if entry already exists:
+                    for _, entry := range row.Data {
+                        if entry == query.Entry {
+                            return
+                        }
+                    }
                     ptr := (*db)[idx].Data[jdx].Data
                     (*db)[idx].Data[jdx].Data = append(ptr, query.Entry)
                     return
@@ -102,13 +116,24 @@ func (DB) Set(query * Query) {
 
 func (DB) Delete(query * Query) {
     if len(query.Topic) > 0 {
-        // remove row
+        // remove row or entry in a row
         for idx, table := range *db {
             if table.Client == query.Client {
                 for jdx, row := range table.Data {
                     if row.Topic == query.Topic {
-                        db.remove_row(idx, jdx)
-                        return
+                        if len(query.Entry) > 0 {
+                            // remove entry in a row
+                            for edx, entry_ := range row.Data{
+                                if query.Entry == entry_ {
+                                    db.remove_entry(idx, jdx, edx)
+                                    return
+                                }
+                            }
+                        } else {
+                            // remove row
+                            db.remove_row(idx, jdx)
+                            return
+                        }
                     }
                 }
             }

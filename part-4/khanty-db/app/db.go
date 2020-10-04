@@ -40,10 +40,12 @@ func handle_delete(w http.ResponseWriter, r * http.Request) {
     vars := mux.Vars(r)
     client_id  := vars["client_id"]
     topic := vars["topic"]
+    entry := vars["entry"]
 
     query := &model.Query {
         Client: client_id,
         Topic: topic,
+        Entry: entry,
     }
 
     db.Delete(query)
@@ -78,6 +80,7 @@ func main() {
     // DELETE requests
     r.HandleFunc("/{client_id}", handle_delete).Methods("DELETE")
     r.HandleFunc("/{client_id}/{topic}", handle_delete).Methods("DELETE")
+    r.HandleFunc("/{client_id}/{topic}/{entry}", handle_delete).Methods("DELETE")
 
     // POST requests
     r.HandleFunc("/{client_id}", handle_post).Methods("POST")

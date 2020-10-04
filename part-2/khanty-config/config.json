@@ -5,7 +5,7 @@
        "name": "topic",
        "host": "http://develop.valenoq.com",
        "port": "10001"
-    }, 
+    },
     {
        "name": "config",
        "host": "http://develop.valenoq.com",
@@ -15,6 +15,11 @@
        "name": "db",
        "host": "http://develop.valenoq.com",
        "port": "10003"
-    }
+   },
+   {
+      "name": "master",
+      "host": "http://develop.valenoq.com",
+      "port": "10004"
+   }
   ]
 }
