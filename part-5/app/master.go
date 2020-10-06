@@ -5,8 +5,8 @@ import (
     "log"
     "net/http"
     "net/url"
-    // "io/ioutil"
-    // "encoding/json"
+    "io/ioutil"
+    "encoding/json"
     "github.com/samarkanov/khanty-app/utils"
     "github.com/gorilla/mux"
 )
@@ -60,10 +60,40 @@ func handle_unsubscribe(w http.ResponseWriter, r * http.Request) {
     }
 }
 
-func handle_notify(w http.ResponseWriter, r * http.Request) {
-
+func notify_client(w * http.ResponseWriter, client_portno string, topic string, value string) {
+    // TODO: send request towards client
+    fmt.Fprintf(*w, "about to notify {client: %s, topic: %s, value: %s}", client_portno, topic, value)
 }
 
+func handle_notify(w http.ResponseWriter, r * http.Request) {
+    db_portno, db_host := db_config()
+    topic := r.FormValue("topic")
+    message := r.FormValue("value")
+
+    if len(topic) > 0 && len(message) > 0 {
+
+        // retrieve all subscrubers for a given topic
+        url_path := fmt.Sprintf("%s:%s/master/%s", db_host, db_portno, topic)
+        client := &http.Client{}
+        request, err := http.NewRequest("GET", url_path, nil)
+
+        if err != nil {
+            fmt.Fprintf(w, utils.ReplyError(err.Error()))
+            return
+        }
+
+        resp, _ := client.Do(request)
+
+        if resp.StatusCode == http.StatusOK {
+            body, _ := ioutil.ReadAll(resp.Body)
+            var reply []string
+            json.Unmarshal(body, &reply)
+            for _, client := range reply {
+                notify_client(&w, client, topic, message)
+            }
+        }
+    }
+}
 
 
 func main() {
@@ -76,7 +106,7 @@ func main() {
     r.HandleFunc("/notify", handle_notify).Methods("POST")
 
     // DELETE unsubscribe
-    r.HandleFunc("/unsubscribe/{client_id}/{topic}", handle_unsubscribe).Methods("DELETE")
+    r.HandleFunc("/unsubscribe/{topic}/{client_id}", handle_unsubscribe).Methods("DELETE")
 
     http.Handle("/", r)
     log.Fatal(http.ListenAndServe(":"+utils.Portno("master"), nil))
