@@ -1,0 +1,4 @@
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/samarkanov/khanty-app/utils v0.0.0-20201002135828-0ea458202266 h1:c+z0x3xT1ZhN6Eps/wqzssvCzcU2QU1MujF4FsSaAkE=
+github.com/samarkanov/khanty-app/utils v0.0.0-20201002135828-0ea458202266/go.mod h1:XYfEPiM7iTWVyt90GD2W9rWidZ/aQRsvOjeYTAzAMJM=

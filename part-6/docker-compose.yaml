@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  clientA:
+    image: khanty.client
+    command: ["/tmp/app/khanty-client", "clientA"]
+    ports:
+      - "10010:10010"
+  clientB:
+    image: khanty.client
+    command: ["/tmp/app/khanty-client", "clientB"]
+    ports:
+      - "10011:10011"
+  clientC:
+    image: khanty.client
+    command: ["/tmp/app/khanty-client", "clientC"]
+    ports:
+      - "10012:10012"
+  clientD:
+    image: khanty.client
+    command: ["/tmp/app/khanty-client", "clientD"]
+    ports:
+      - "10013:10013"
