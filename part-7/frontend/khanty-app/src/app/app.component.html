@@ -1,0 +1,47 @@
+<h1>{{title}}</h1>
+<div style="margin-top:10px" *ngIf="topics !== undefined">
+    <!-- <button *ngFor="let topic of topics.topics"
+             style="width:150px;margin-left:20px"
+             type="button"
+             name="button"
+             id="{{topic}}"
+             (click)="notify($event, topic)">
+        {{topic}}
+    </button> -->
+    <div *ngIf="config">
+        <div *ngFor="let client of clients | keyvalue"
+              style="background-color:{{client.value.color}};width:320px;margin-left:20px;height:160px;margin-top:5px">
+              <div style="margin-left:30px;padding-top:5px">
+                  <div style="width:190px;float:left;margin-top:5px">Name:</div>
+                                        <div style="margin-top:5px">{{client.value.name}}</div>
+
+                  <div style="width:190px;float:left;margin-top:5px">Port:</div>
+                                        <div style="margin-top:5px">{{client.key}}</div>
+
+                  <div style="width:190px;float:left;margin-top:5px">Last message:</div>
+                                        <div style="margin-top:5px;height:20px">{{client.value.message}}</div>
+
+                  <div style="width:190px;float:left;margin-top:5px">Color:</div>
+                                        <div style="margin-top:5px;height:20px">{{client.value.color}}</div>
+
+                  <div style="width:190px;float:left;margin-top:5px">New messages:</div>
+                                        <div style="margin-top:5px">
+                                            <label>
+                                                <input type="checkbox" name="messagesSubscribe"
+                                                        [checked]="client.value.messagesSubscribe === true"
+                                                        (click)="onMsgEvent(client.key, $event)">Subscribe
+                                            </label>
+                                        </div>
+
+                  <div style="width:190px;float:left;margin-top:5px">Color change:</div>
+                                        <div style="margin-top:5px">
+                                            <label>
+                                                <input type="checkbox" name="colorSubscribe"
+                                                    [checked]="client.value.colorSubscribe === true"
+                                                    (click)="onColorEvent(client.key, $event)">Subscribe
+                                            </label>
+                                        </div>
+              </div>
+        </div>
+    </div>
+</div>

@@ -18,9 +18,11 @@ func get_context() (HantyTopicContext) {
     var ctx HantyTopicContext = make(HantyTopicContext)
 
     ctx["ChangeColor"] = []string{"#5e72e4", "#f3a4b5", "#ffd600",
-                                  "#2bffc6", "#fd5d93", "#ffffff"}
+                                  "#2bffc6", "#fd5d93", "#2bfec6", "#fe5d93",
+                                  "#3bffc6", "#4d5d93", "#7bfec6", "#fe7d93"}
 
-    ctx["SendMessage"] = []string{"SayHi", "SayStopIt"}
+    ctx["SendMessage"] = []string{"SayHi", "SayStopIt", "Something",
+                                    "Other thing", "Call me"}
 
     return ctx
 }

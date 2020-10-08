@@ -34,6 +34,10 @@ func (client * Client) get_state() (* http.Response) {
 }
 
 func (client * Client) handle_get(w http.ResponseWriter, r * http.Request) {
+    // allow CORS: so the request can be done from anywhere
+    // It is ok for test environment
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+
     resp := client.get_state()
 
     if resp.StatusCode == http.StatusOK {
@@ -43,6 +47,10 @@ func (client * Client) handle_get(w http.ResponseWriter, r * http.Request) {
 }
 
 func (client * Client) handle_get_topic(w http.ResponseWriter, r * http.Request) {
+    // allow CORS: so the request can be done from anywhere
+    // It is ok for test environment
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+
     resp := client.get_state()
     vars := mux.Vars(r)
     topic  := vars["topic"]
@@ -57,7 +65,14 @@ func (client * Client) handle_get_topic(w http.ResponseWriter, r * http.Request)
 
         for _, dbitem := range reply {
             if dbitem.Topic == topic {
-                fmt.Fprintf(w, dbitem.Data[len(dbitem.Data)-1])
+                res, _ := json.Marshal(struct{
+                    Data string `json:"data"`
+                    Name string `json:"name"`
+                }{
+                     dbitem.Data[len(dbitem.Data)-1],
+                     client.name,
+                })
+                fmt.Fprintf(w, string(res))
             }
         }
     }

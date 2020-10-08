@@ -27,6 +27,10 @@ func reply_success(host string, portno string) string {
 }
 
 func handle_request(w http.ResponseWriter, r * http.Request) {
+    // allow CORS: so the request can be done from anywhere
+    // It is ok for test environment
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    
     var reply string
     config := *config.New() // getting from memory
 

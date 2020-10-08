@@ -10,8 +10,8 @@ services:
     image: khanty.topic.img
     container_name: khanty.topic
     depends_on:
-        - "config"
-        - "db"
+        - config
+        - db
     ports:
         - "10001:10001"
     command: ["/tmp/app/khanty-topic"]
@@ -48,8 +48,8 @@ services:
     image: khanty.master.img
     container_name: khanty.master
     depends_on:
-        - "config"
-        - "db"
+        - config
+        - db
     ports:
         - "10004:10004"
     command: ["/tmp/app/khanty-master"]
@@ -61,8 +61,8 @@ services:
         dockerfile: Dockerfile
     image: khanty.client.img
     depends_on:
-        - "config"
-        - "db"
+        - config
+        - db
     ports:
       - "10010:10010"
     command: ["/tmp/app/khanty-client", "clientA"]
@@ -73,8 +73,8 @@ services:
         dockerfile: Dockerfile
     image: khanty.client.img
     depends_on:
-        - "config"
-        - "db"
+        - config
+        - db
     ports:
       - "10011:10011"
     command: ["/tmp/app/khanty-client", "clientB"]
@@ -85,8 +85,8 @@ services:
         dockerfile: Dockerfile
     image: khanty.client.img
     depends_on:
-        - "config"
-        - "db"
+        - config
+        - db
     ports:
       - "10012:10012"
     command: ["/tmp/app/khanty-client", "clientC"]
@@ -97,8 +97,8 @@ services:
         dockerfile: Dockerfile
     image: khanty.client.img
     depends_on:
-        - "config"
-        - "db"
+        - config
+        - db
     ports:
       - "10013:10013"
     command: ["/tmp/app/khanty-client", "clientD"]

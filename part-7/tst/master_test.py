@@ -48,6 +48,7 @@ class TestMaster(unittest.TestCase):
     def test_check_notification(self):
         print("TestMaster::test_check_subscription")
         params = dict()
+        expectation = dict()
 
         # check that nothing is in DB
         url = "{host}/master".format(host=HOST_DB)
@@ -81,11 +82,11 @@ class TestMaster(unittest.TestCase):
         params["value"] = "some_value"
         url = "{host}/notify".format(host=HOST_MASTER)
         res = requests.post(url, params)
-        expectation = ("about to notify {client: 7777, topic: topic_x, value: some_value}"
-                       "about to notify {client: 8888, topic: topic_x, value: some_value}"
-                       "about to notify {client: 9999, topic: topic_x, value: some_value}")
+        expectation["success"] = True
+        expectation["clients"] = ["7777", "8888", "9999"]
+        expectation["message"] = "clients notified OK"
         self.assertTrue(res.ok)
-        self.assertEqual(res.text, expectation)
+        self.assertEqual(json.loads(res.text), expectation)
 
         # unsubscribe client 9999
         url = "{host}/unsubscribe/topic_x/9999".format(host=HOST_MASTER)
@@ -97,10 +98,11 @@ class TestMaster(unittest.TestCase):
         params["value"] = "xxx"
         url = "{host}/notify".format(host=HOST_MASTER)
         res = requests.post(url, params)
-        expectation = ("about to notify {client: 7777, topic: topic_x, value: xxx}"
-                       "about to notify {client: 8888, topic: topic_x, value: xxx}")
+        expectation["success"] = True
+        expectation["clients"] = ["7777", "8888"]
+        expectation["message"] = "clients notified OK"
         self.assertTrue(res.ok)
-        self.assertEqual(res.text, expectation)
+        self.assertEqual(json.loads(res.text), expectation)
 
         # unsubscribe non-existing client
         url = "{host}/unsubscribe/topic_x/9999".format(host=HOST_MASTER)
@@ -112,10 +114,11 @@ class TestMaster(unittest.TestCase):
         params["value"] = "xxx"
         url = "{host}/notify".format(host=HOST_MASTER)
         res = requests.post(url, params)
-        expectation = ("about to notify {client: 7777, topic: topic_x, value: xxx}"
-                       "about to notify {client: 8888, topic: topic_x, value: xxx}")
+        expectation["success"] = True
+        expectation["clients"] = ["7777", "8888"]
+        expectation["message"] = "clients notified OK"
         self.assertTrue(res.ok)
-        self.assertEqual(res.text, expectation)
+        self.assertEqual(json.loads(res.text), expectation)
 
         # unsubscribe client 8888
         url = "{host}/unsubscribe/topic_x/8888".format(host=HOST_MASTER)
@@ -127,13 +130,16 @@ class TestMaster(unittest.TestCase):
         params["value"] = "yyyy"
         url = "{host}/notify".format(host=HOST_MASTER)
         res = requests.post(url, params)
-        expectation = ("about to notify {client: 7777, topic: topic_x, value: yyyy}")
+        expectation["success"] = True
+        expectation["clients"] = ["7777"]
+        expectation["message"] = "clients notified OK"
         self.assertTrue(res.ok)
-        self.assertEqual(res.text, expectation)
+        self.assertEqual(json.loads(res.text), expectation)
 
     def test_notify_if_no_clients_subscribed(self):
         print("TestMaster::test_notify_no_clients_subscribed")
         params = dict()
+        expectation = dict()
 
         # notify: must not lead to error
         params["topic"] = "topic_x"
@@ -141,7 +147,10 @@ class TestMaster(unittest.TestCase):
         url = "{host}/notify".format(host=HOST_MASTER)
         res = requests.post(url, params)
         self.assertTrue(res.ok)
-        self.assertEqual(res.text, "")
+        expectation["success"] = True
+        expectation["clients"] = None
+        expectation["message"] = "clients notified OK"
+        self.assertEqual(json.loads(res.text), expectation)
 
 
 if __name__ == "__main__":

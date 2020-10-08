@@ -18,10 +18,13 @@ def restart_services():
                                     shell=True,
                                     cwd=os.path.abspath(os.path.join(".", os.pardir)))
 
+    time.sleep(1)
+
     # start clients
     proc = subprocess.check_output("docker-compose up -d",
                                     shell=True,
                                     cwd=os.path.abspath(os.path.join(".", os.pardir)))
+    time.sleep(1)
 
 class TestClient(unittest.TestCase):
 
@@ -40,6 +43,7 @@ class TestClient(unittest.TestCase):
             host = self.config[client]["host"]
             port = self.config[client]["port"]
             res = requests.get("{host}:{port}".format(host=host, port=port))
+            time.sleep(1)
             self.assertTrue(res.ok)
             res = json.loads(res.text)
             self.assertEqual(len(res), 2)
@@ -58,6 +62,7 @@ class TestClient(unittest.TestCase):
                 ctx["port"] = port
                 ctx["topic"] = topic
                 res = requests.get("{host}:{port}/{topic}".format(**ctx))
+                time.sleep(1)
                 self.assertTrue(res.ok)
                 self.assertTrue(len(res.text) > 5)
             print("\tclient %s is OK" %client)
