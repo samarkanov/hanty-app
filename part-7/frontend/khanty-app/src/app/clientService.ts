@@ -18,19 +18,19 @@ export interface ClientTopicInfo {
 export type ClientData = Array<TopicInfo>
 
 export class ClientService {
-  private host = "http://develop.valenoq.com"
+  private host = "https://develop.valenoq.com/sandbox/khanty-app/client"
 
   constructor(private http: HttpClient) {
 
   }
 
   public getState(port: string, topics: string[]) :  Observable<ClientTopicInfo> {
-      const url = this.host + ":" + port
+      const url = this.host + "/" + port
       var urls = {}
       for (const topicName of topics) {
           urls[topicName] = ajax.getJSON(url + "/" + topicName)
       }
 
-      return interval(1000).pipe(switchMap(() => forkJoin(urls))) // TODO
+      return interval(1000).pipe(switchMap(() => forkJoin(urls)))
   }
 }

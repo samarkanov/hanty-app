@@ -1,13 +1,35 @@
+{% load static %}
+{% csrf_token %}
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>KhantyApp</title>
+  <title>Khanty-app</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="{% static 'modules/black-dashboard/img/favicon.png' %}">
 </head>
 <body>
-  <app-root></app-root>
+    <div>status of docker containers: &nbsp;{{status}}</div>
+    <div>source code: &nbsp;<a href="https://github.com/samarkanov/khanty-app">github</a><div>
+
+    <app-root></app-root>
+
+    <div style="margin-top:15px;margin-left:15px">
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-1.html">part 1</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-2.html">part 2</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-3.html">part 3</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-4.html">part 4</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-5.html">part 5</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-6.html">part 6</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-7.html">part 7</a><div>
+    </div>
+
+    <script src="{% static 'js/khanty-app/runtime.js' %}" defer></script>
+    <script src="{% static 'js/khanty-app/polyfills.js' %}" defer></script>
+    <script src="{% static 'js/khanty-app/styles.js' %}" defer></script>
+    <script src="{% static 'js/khanty-app/vendor.js' %}" defer></script>
+    <script src="{% static 'js/khanty-app/main.js' %}" defer></script>
 </body>
 </html>

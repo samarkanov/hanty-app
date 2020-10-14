@@ -16,12 +16,11 @@ export interface ConfigItem {
 export type Config = Record<string, ConfigItem>
 
 export class ConfigService {
-  private port = "10002"
-  private host = "http://develop.valenoq.com"
+  private host = "https://develop.valenoq.com/sandbox/khanty-app/config"
   private url: string
 
   constructor(private http: HttpClient) {
-      this.url = this.host + ":" + this.port
+      this.url = this.host
   }
 
   public getConfig() : Observable<Config> {

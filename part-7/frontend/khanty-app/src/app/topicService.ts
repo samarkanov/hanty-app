@@ -13,12 +13,11 @@ export interface StateTopic {
 }
 
 export class TopicService {
-  private port = "10001"
-  private host = "http://develop.valenoq.com"
+  private host = "https://develop.valenoq.com/sandbox/khanty-app/topic"
   private url: string
 
   constructor(private http: HttpClient) {
-      this.url = this.host + ":" + this.port
+      this.url = this.host
   }
 
   public listTopics() : Observable<ListTopics> {
@@ -27,18 +26,5 @@ export class TopicService {
 
   public statesForTopic(topic: string) : Observable<StateTopic> {
       return this.http.get<StateTopic>(this.url + "/" + topic);
-      // var url = {
-      //     topic: ajax.getJSON(this.url + "/" + topic)
-      // }
-      // return this.http.get<StateTopic>(url).pipe(
-      //     mergeMap(x => interval(1000).pipe(map(i => x)))
-      // )
-      // var urls = {
-      //     url:
-      // }
-      // for (const topicName of topics) {
-      //     urls[topic] = ajax.getJSON(url + "/" + topicName)
-      // }
-      // return interval(1000).pipe(switchMap(() => forkJoin(url)))
   }
 }
