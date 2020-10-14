@@ -1,4 +1,4 @@
-https://github.com/samarkanov/khanty-app/blob/master/README.md# Demo
+# Demo
 [https://develop.valenoq.com/sandbox/khanty-app](https://develop.valenoq.com/sandbox/khanty-app)
 
 # Step by step tutorial
