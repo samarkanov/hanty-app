@@ -11,6 +11,18 @@ export interface SubscriptionForm {
     portno: string
 }
 
+export interface ActionEvent {
+    success: boolean
+    action: string
+    client: string
+    topic: string
+    ip: string
+}
+
+export interface NotificationMessage {
+    message: string
+}
+
 export class MasterService {
   private host = "https://develop.valenoq.com/sandbox/khanty-app/master"
   private url: string
@@ -46,6 +58,11 @@ export class MasterService {
       return this.http.get<Subscribers>(url);
   }
 
+  public get_latest_notification() : Observable<NotificationMessage> {
+      const url = this.url + "/get-notification"
+      return this.http.get<NotificationMessage>(url);
+  }
+
   public notify(topic:string, value:string) : void {
       const url = this.url + "/notify"
       let body = `topic=${topic}&value=${value}`
@@ -56,23 +73,28 @@ export class MasterService {
       )
   }
 
-  public subscribe(topic:string, portno:string) : void {
+  public sub(topic:string, portno:string) : Observable<ActionEvent> {
       const url = this.url + "/subscribe"
       let body = `topic=${topic}&portno=${portno}`
       const myheaders = {headers: this.generate_headers()}
+      return this.http.post<ActionEvent>(url, body, myheaders);
+  }
+
+  public unsub(topic:string, portno:string) : Observable<ActionEvent> {
+      const url = this.url + "/unsubscribe/" + topic + "/" + portno
+      const myheaders = {headers: this.generate_headers()}
+      return this.http.delete<ActionEvent>(url, myheaders);
+  }
+
+  public store_notiffication_msg(data: ActionEvent) : void {
+      const url = this.url + "/store-notification"
+      let body = `ip=${data.ip.split(":")[0]}&action=${data.action}&topic=${data.topic}&client=${data.client}`
+      const myheaders = {headers: this.generate_headers()}
+      // console.log("about to store notification, body: " + body)
       this.http.post(url, body, myheaders).subscribe(
           (res) => {},
           (err) => {console.log(err)}
-      )
+      );
   }
 
-  public unsubscribe(topic:string, portno:string) : void {
-      const url = this.url + "/unsubscribe/" + topic + "/" + portno
-      const myheaders = {headers: this.generate_headers()}
-
-      this.http.delete(url, myheaders).subscribe(
-          (res) => {},
-          (err) => {console.log(err)}
-      )
-  }
 }

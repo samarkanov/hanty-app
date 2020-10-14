@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TopicService, ListTopics, StateTopic } from './topicService';
 import { Config, ConfigItem, ConfigService } from './configService';
 import { ClientData, ClientService, ClientTopicInfo } from './clientService';
-import { MasterService, Subscribers } from './masterService';
+import { MasterService, Subscribers, ActionEvent, NotificationMessage } from './masterService';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { Observable, Subject, throwError, of, interval } from 'rxjs';
@@ -21,7 +21,7 @@ export class AppComponent {
   public config: Config
   public clients: Record<string, ConfigItem> = {}
   public clNamePortMap: Record<string, string> = {}
-
+  public latestNotification: string = ""
 
   private topicService : TopicService
   private configService: ConfigService
@@ -55,23 +55,37 @@ export class AppComponent {
                 // here we deal with an endless loop
                 (data: ClientTopicInfo) => {
                      this.updateClientState(data)
+
+                     // message checkbox update
+                     this.masterService.is_subscribed("SendMessage").subscribe(
+                         (data:Subscribers) => {
+                             if (data.subscribers && data.subscribers.indexOf(portno) > -1) {
+                                 this.clients[portno].messagesSubscribe = true
+                             } else{
+                                 this.clients[portno].messagesSubscribe = false
+                             }
+                     })
+
+                     // color checkbox update
+                     this.masterService.is_subscribed("ChangeColor").subscribe(
+                         (data:Subscribers) => {
+                             if (data.subscribers && data.subscribers.indexOf(portno) > -1) {
+                                 this.clients[portno].colorSubscribe = true
+                             } else{
+                                 this.clients[portno].colorSubscribe = false
+                             }
+                     })
+
+                     // notification pop-up
+                     this.masterService.get_latest_notification().subscribe(
+                         (data:NotificationMessage) => {
+                             // console.log(data)
+                             if (data) this.latestNotification = data.message;
+                         }
+                     )
           });
 
-          // message checkbox update
-          this.masterService.is_subscribed("SendMessage").subscribe(
-              (data:Subscribers) => {
-                  if (data.subscribers && data.subscribers.indexOf(portno) > -1) {
-                      this.clients[portno].messagesSubscribe = true
-                  }
-          })
 
-          // color checkbox update
-          this.masterService.is_subscribed("ChangeColor").subscribe(
-              (data:Subscribers) => {
-                  if (data.subscribers && data.subscribers.indexOf(portno) > -1) {
-                      this.clients[portno].colorSubscribe = true
-                  }
-          })
       }
   }
 
@@ -112,18 +126,43 @@ export class AppComponent {
   }
 
   public onMsgEvent(portno: string, event: any){
+      let reply = {}
       if (event.target.checked){
-          this.masterService.subscribe("SendMessage", portno)
+          this.masterService.sub("SendMessage", portno).subscribe(
+              (data: ActionEvent) => {
+                  data.action = "subscribed"
+                  this.store_msg(data)
+              }
+          )
       } else {
-          this.masterService.unsubscribe("SendMessage", portno)
+          this.masterService.unsub("SendMessage", portno).subscribe(
+              (data: ActionEvent) => {
+                  data.action = "unsubscribed"
+                  this.store_msg(data)
+              }
+          )
       }
+  }
+
+  private store_msg(data: ActionEvent) {
+        this.masterService.store_notiffication_msg(data)
   }
 
   public onColorEvent(portno: string, event: any){
       if (event.target.checked){
-          this.masterService.subscribe("ChangeColor", portno)
+          this.masterService.sub("ChangeColor", portno).subscribe(
+              (data: ActionEvent) => {
+                  data.action = "subscribed"
+                  this.store_msg(data)
+              }
+          )
       } else {
-          this.masterService.unsubscribe("ChangeColor", portno)
+          this.masterService.unsub("ChangeColor", portno).subscribe(
+              (data: ActionEvent) => {
+                  data.action = "unsubscribed"
+                  this.store_msg(data)
+              }
+          )
       }
   }
 

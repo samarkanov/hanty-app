@@ -1,13 +1,6 @@
 <h1>{{title}}</h1>
 <div style="margin-top:10px" *ngIf="topics !== undefined">
-    <!-- <button *ngFor="let topic of topics.topics"
-             style="width:150px;margin-left:20px"
-             type="button"
-             name="button"
-             id="{{topic}}"
-             (click)="notify($event, topic)">
-        {{topic}}
-    </button> -->
+    <div>Latest update: &nbsp;{{latestNotification}}</div>
     <div *ngIf="config">
         <div *ngFor="let client of clients | keyvalue"
               style="background-color:{{client.value.color}};width:320px;margin-left:20px;height:160px;margin-top:5px">

@@ -11,8 +11,13 @@
   <link rel="icon" type="image/x-icon" href="{% static 'modules/black-dashboard/img/favicon.png' %}">
 </head>
 <body>
-    <div>status of docker containers: &nbsp;{{status}}</div>
-    <div>source code: &nbsp;<a href="https://github.com/samarkanov/khanty-app">github</a><div>
+    <h1>Intro</h1>
+    <div style="margin-top:5px">Description: &nbsp;the clients (boxes below) can subscribe, unsubscribe to/from
+        a particular event ("SendMessage", "ChangeColor"). You as a user can make subscriptions for clients.
+        Once client is subscribed, it starts receiving (frequent) notifications leading to a change in the client's state. That state is preserved in a database.
+        Meanwhile, UI keeps requesting the state of each client and make it visible here<div>
+    <div style="margin-top:5px">Status of docker containers: &nbsp;{{status}} (will be forcefully restarted 05AM:00 UTC)</div>
+    <div style="margin-top:5px">Source code: &nbsp;<a href="https://github.com/samarkanov/khanty-app">github</a><div>
 
     <app-root></app-root>
 
@@ -24,6 +29,7 @@
     <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-5.html">part 5</a><div>
     <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-6.html">part 6</a><div>
     <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-7.html">part 7</a><div>
+    <div>tutorial:	&nbsp;<a href="https://samarkanov.info/blog/rest/khanty-app-part-8.html">part 8</a><div>
     </div>
 
     <script src="{% static 'js/khanty-app/runtime.js' %}" defer></script>
