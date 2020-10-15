@@ -12,6 +12,6 @@
 - [part 8: UI and deployment](https://samarkanov.info/blog/rest/khanty-app-part-8.html)
 
 # Tech stack
-* golang for REST APIs
+* go for REST APIs
 * django, angular for UI
 * docker, docker-compose for containerization
